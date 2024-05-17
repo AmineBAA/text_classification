@@ -24,7 +24,7 @@ import pandas as pd
 import pickle
 
 # Load your trained model
-classifier, vectorizer = pickle.load(open('https://github.com/AmineBAA/text_classification/blob/main/text_classifier.pkl', 'rb'))
+classifier, vectorizer = pickle.load(open('text_classification/text_classifier.pkl', 'rb'))
 
 st.title('Text Classification Tool')
 
