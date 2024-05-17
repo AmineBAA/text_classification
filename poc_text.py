@@ -7,9 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1TpCBT-dIPl7pTRG-zzMoY_9NqsuW0GUS
 """
 
-pip install langdetect
-
-pip install googletrans
 
 from langdetect import detect
 from googletrans import Translator
