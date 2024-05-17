@@ -8,24 +8,6 @@ Original file is located at
 """
 
 
-from langdetect import detect
-from googletrans import Translator
-#from arabic import Arabic
-
-def detect_and_convert_test(text):
-    try:
-        detected_lang_test = detect(text)
-        if detected_lang_test == 'ar':
-            translator_test = Translator()
-            translated_text_test = translator_test.translate(text, src='ar', dest='fr').text
-            # or you can use Arabic library for more control
-            # translated_text = Arabic(text).translate()
-            return translated_text_test
-        else:
-            return text
-    except:
-        return text
-
 import re
 
 def preprocess_text(text):
@@ -55,8 +37,6 @@ if uploaded_file is not None:
     le = LabelEncoder()
     Y_test = le.fit_transform(Y_test)
     Y_test = Y_test.reshape(-1,1)
-    X_test=[detect_and_convert_test(text) for text in X_test]
-    X_test=[text.replace("cart ","carte") for text in X_test]
     X_text=[preprocess_text(text) for text in X_test]
     X_test_vect = vectorizer.transform(X_test)
     predictions = classifier.predict(X_test_vect)  # adjust the column name
