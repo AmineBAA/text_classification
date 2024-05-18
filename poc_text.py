@@ -8,6 +8,7 @@ Original file is located at
 """
 
 import numpy as np
+import sklearn
 
 import re
 
