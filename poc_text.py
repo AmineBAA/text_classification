@@ -45,7 +45,7 @@ if uploaded_file is not None:
     X_test_vect = vectorizer.transform(X_test)
     predictions = classifier.predict(X_test_vect)  # adjust the column name
     df_test['predictions'] = predictions
-    if predictions=='1':
+    if predictions==1:
         df_test['predicted_label'] = 'autre'
     else:
         df_test['predicted_label'] = 'cards'
