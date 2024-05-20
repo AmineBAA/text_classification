@@ -45,6 +45,7 @@ if uploaded_file is not None:
     X_test_vect = vectorizer.transform(X_test)
     predictions = classifier.predict(X_test_vect)  # adjust the column name
     df_test['predictions'] = predictions
+    df_test['predicted_label']=le.inverse_transform(predictions)
     st.write(df_test)
 
 
