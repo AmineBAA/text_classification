@@ -45,12 +45,6 @@ if uploaded_file is not None:
     X_test_vect = vectorizer.transform(X_test)
     predictions = classifier.predict(X_test_vect)  # adjust the column name
     df_test['predictions'] = predictions
-    for i in range(0,predictions.shape[1]):
-        if predictions==1:
-           df_test['predicted_label'][i] = 'autre'
-        else:
-           df_test['predicted_label'][i] = 'cards'
-    
     st.write(df_test)
 
 
