@@ -37,10 +37,6 @@ uploaded_file = st.file_uploader("Choose an Excel file", type=['xlsx'])
 if uploaded_file is not None:
     df_test = pd.read_excel(uploaded_file)
     X_test = df_test.v2
-    Y_test = df_test.v1
-    le = LabelEncoder()
-    Y_test = le.fit_transform(Y_test)
-    Y_test = Y_test.reshape(-1,1)
     X_text=[preprocess_text(text) for text in X_test]
     X_test_vect = vectorizer.transform(X_test)
     predictions = classifier.predict(X_test_vect)  # adjust the column name
