@@ -49,17 +49,17 @@ if uploaded_file is not None:
     df_test = pd.read_excel(uploaded_file)
     X_test = df_test.v2
     # Sample text data
-   text_data = X_test
+    text_data = X_test
 
-   # Tokenization and Stop Words Removal
-   stop_words = stopwords.words('french')
-   stop_words.extend(stopwords.words('arabic'))
-   stop_words.extend(['bonjour','bjr','سلام','عليكم','mon','ma','ال','client','cliente','conteste','_xd_','salam','non','via','de','du','en','la','pas','en',
+    # Tokenization and Stop Words Removal
+    stop_words = stopwords.words('french')
+    stop_words.extend(stopwords.words('arabic'))
+    stop_words.extend(['bonjour','bjr','سلام','عليكم','mon','ma','ال','client','cliente','conteste','_xd_','salam','non','via','de','du','en','la','pas','en',
                    'le','réclame','!','?','salamoalikom','merci','retrait','compte','réclamation','dh','dhs','ai','un','CLIENT','CLIENTE',
                    '~',',','.','_','2023','date','montant','mad','/2023','dun'])
-   stop_words = set(stop_words)
-   processed_text_data = []
-   for text in text_data:
+    stop_words = set(stop_words)
+    processed_text_data = []
+    for text in text_data:
        word_tokens = word_tokenize(text)
        # Stemming (using ISRIStemmer)
        #stemmer = ISRIStemmer()
@@ -69,7 +69,7 @@ if uploaded_file is not None:
        processed_text_data.append(processed_text)
     
 
-X_test=processed_text_data
+    X_test=processed_text_data
     X_text=[preprocess_text(text) for text in X_test]
     X_test_vect = vectorizer.transform(X_test)
     predictions = classifier.predict(X_test_vect)  # adjust the column name
