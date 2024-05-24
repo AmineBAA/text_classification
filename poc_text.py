@@ -48,7 +48,7 @@ if uploaded_file is not None:
     #X_text=[clean_text(text) for text in X_test]
     X_test_vect = vectorizer.transform(X_test)
     predictions = classifier.predict(X_test_vect)  # adjust the column name
-    df_test['predictions'] = np.where(predictions==1,'Multicanal','Monétique')
+    df_test['predictions'] = np.where(predictions==1,'Autre','Monétique')
     st.write(df_test)
 
 
