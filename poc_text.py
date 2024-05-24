@@ -44,7 +44,8 @@ if uploaded_file is not None:
     X_test = df_test.v2
     # Sample text data
     text_data = X_test
-    X_text=[clean_text(text) for text in X_test]
+    X_test=X_test.apply(clean_text)
+    #X_text=[clean_text(text) for text in X_test]
     X_test_vect = vectorizer.transform(X_test)
     predictions = classifier.predict(X_test_vect)  # adjust the column name
     df_test['predictions'] = np.where(predictions==1,'Multicanal','Monétique')
