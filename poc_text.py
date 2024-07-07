@@ -50,7 +50,7 @@ if uploaded_file is not None:
     predictions = classifier.predict(X_test_vect)  # adjust the column name
     # Custom labels dictionary
     label_map = {0: 'Recharge carte prépayée non aboutie',
-                 1: 'Retard d'exécution d'un ordre virement (normal, cih on line)',
+                 1: 'Retard d exécution d un ordre virement (normal, cih on line)',
                  2: 'Code PIN non reçu', 3: 'Manque solde sur le compte',
                  4: 'Non réception OTP (Activation, transfert ou recharge)',
                  5: 'Autre'} 
