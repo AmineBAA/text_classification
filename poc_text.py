@@ -15,7 +15,7 @@ from io import BytesIO
 def to_excel(df):
     output = BytesIO()
     writer = pd.ExcelWriter(output, engine='openpyxl')
-    df.to_excel(writer, index=False, sheet_name='Sheet1')
+    df.to_excel(writer, index=False, sheet_name='Feuil1')
     writer.save()
     processed_data = output.getvalue()
     return processed_data
@@ -67,12 +67,12 @@ if uploaded_file is not None:
     #st.write(df_test)
     excel_data = to_excel(df_test)
 
-st.download_button(
+    st.download_button(
     label='Download Excel file',
     data=excel_data,
     file_name='Claims.xlsx',
     mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-)
+    )
 
 
 
