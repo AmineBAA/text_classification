@@ -64,15 +64,9 @@ if uploaded_file is not None:
                  5: 'Autre'} 
     transformed_labels = np.vectorize(label_map.get)(predictions)
     df_test['nature_prediction'] = transformed_labels
-    #st.write(df_test)
     excel_data = to_excel(df_test)
+    st.write(excel_data)
 
-    st.download_button(
-    label='Download Excel file',
-    data=excel_data,
-    file_name='Claims.xlsx',
-    mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-    )
 
 
 
