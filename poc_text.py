@@ -10,7 +10,15 @@ import numpy as np
 import sklearn
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
+from io import BytesIO
 
+def to_excel(df):
+    output = BytesIO()
+    writer = pd.ExcelWriter(output, engine='openpyxl')
+    df.to_excel(writer, index=False, sheet_name='Sheet1')
+    writer.save()
+    processed_data = output.getvalue()
+    return processed_data
 
 
 import re
@@ -56,7 +64,15 @@ if uploaded_file is not None:
                  5: 'Autre'} 
     transformed_labels = np.vectorize(label_map.get)(predictions)
     df_test['nature_prediction'] = transformed_labels
-    st.write(df_test)
+    #st.write(df_test)
+    excel_data = to_excel(df_test)
+
+st.download_button(
+    label='Download Excel file',
+    data=excel_data,
+    file_name='Claims.xlsx',
+    mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+)
 
 
 
