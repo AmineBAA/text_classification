@@ -7,25 +7,16 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from tensorflow.keras.models import load_model
 
 # Load the model (adjust the path to your model file)
-model = load_model('text_classification_model.h5')
+classifier, vectorizer = load_model('text_classifier.h5')
 
-# Load the label encoder (adjust the path to your label encoder file)
-with open('label_encoder.pkl', 'rb') as f:
-    label_encoder = pickle.load(f)
-
-# Load the TF-IDF vectorizer (adjust the path to your vectorizer file)
-with open('tfidf_vectorizer.pkl', 'rb') as f:
-    tfidf_vectorizer = pickle.load(f)
 
 # Function to preprocess and predict text
 def predict(texts):
     # Transform text to TF-IDF features
-    features = tfidf_vectorizer.transform(texts)
+    features = vectorizer.transform(texts)
     # Predict classes
     predictions = model.predict(features)
-    # Convert predictions to class labels
-    predicted_classes = label_encoder.inverse_transform(np.argmax(predictions, axis=1))
-    return predicted_classes
+    return predictions
 
 # Streamlit app
 st.title("Text Classification with Uploaded Excel File")
