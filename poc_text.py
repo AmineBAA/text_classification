@@ -44,7 +44,7 @@ if uploaded_file is not None:
     st.image(image, caption="Uploaded Image", use_column_width=True)
 
     # Load the TFLite model
-    interpreter = load_model('model.tflite')
+    interpreter = load_model('my_model.tflite')
     
     # Preprocess the image
     preprocessed_image = preprocess_image(image)
