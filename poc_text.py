@@ -1,10 +1,9 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import tensorflow as tf
 from sklearn.preprocessing import LabelEncoder
 from sklearn.feature_extraction.text import TfidfVectorizer
-from tensorflow.keras.models import load_model
+
 
 # Load the model (adjust the path to your model file)
 classifier, vectorizer = load_model('text_classifier.h5')
