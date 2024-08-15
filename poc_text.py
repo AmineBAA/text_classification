@@ -48,7 +48,7 @@ if uploaded_file is not None:
         
         # Predict classes
         predictions = predict(X)
-        labels={0:"Recharge carte prépayée non aboutie",1:"Retard d'exécution de virement",	2:"Code PIN non reçu",3:"Non réception OTP",4:"Autre",5:"Autre2"}
+        labels={0:"Recharge carte prépayée non aboutie",1:"Retard d'exécution de virement",	2:"Code PIN non reçu",3:"Retrait non servi",4:"Non réception OTP",5:"Autre"}
         
         predicted_label=[labels[i] for i in predictions]
         
