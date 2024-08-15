@@ -48,9 +48,9 @@ if uploaded_file is not None:
         
         # Predict classes
         predictions = predict(X)
-        labels=["Recharge carte prépayée non aboutie","Retard d'exécution de virement",	"Code PIN non reçu","Non réception OTP","Autre"]
+        labels={0:"Recharge carte prépayée non aboutie",1:"Retard d'exécution de virement",	2:"Code PIN non reçu",3:"Non réception OTP",4:"Autre"]
         
-        predicted_label=[labels[i] for i in enumerate(predictions)]
+        predicted_label=[labels[i] for i in predictions]
         
         # Add predictions to the DataFrame
         df['predicted_class'] = predicted_label
