@@ -1,64 +1,64 @@
 import streamlit as st
-import tensorflow as tf
+import pandas as pd
 import numpy as np
-from PIL import Image
+import tensorflow as tf
+from sklearn.preprocessing import LabelEncoder
+from sklearn.feature_extraction.text import TfidfVectorizer
+from tensorflow.keras.models import load_model
 
-# Function to load the TFLite model
-def load_model(tflite_model_path):
-    # Load the TFLite model and allocate tensors
-    interpreter = tf.lite.Interpreter(model_path=tflite_model_path)
-    interpreter.allocate_tensors()
-    return interpreter
+# Load the model (adjust the path to your model file)
+model = load_model('text_classification_model.h5')
 
-# Function to preprocess the image
-def preprocess_image(image, target_size=(224, 224)):
-    image = image.resize(target_size)
-    image = np.array(image).astype(np.float32)
-    image = image / 255.0  # Normalize to [0, 1]
-    image = np.expand_dims(image, axis=0)  # Add batch dimension
-    return image
+# Load the label encoder (adjust the path to your label encoder file)
+with open('label_encoder.pkl', 'rb') as f:
+    label_encoder = pickle.load(f)
 
-# Function to make predictions using the TFLite model
-def predict(interpreter, image):
-    # Get input and output tensors
-    input_details = interpreter.get_input_details()
-    output_details = interpreter.get_output_details()
-    
-    # Set the tensor to point to the input data to be inferred
-    interpreter.set_tensor(input_details[0]['index'], image)
-    
-    # Run inference
-    interpreter.invoke()
-    
-    # Get the results from the output tensor
-    output_data = interpreter.get_tensor(output_details[0]['index'])
-    return output_data
+# Load the TF-IDF vectorizer (adjust the path to your vectorizer file)
+with open('tfidf_vectorizer.pkl', 'rb') as f:
+    tfidf_vectorizer = pickle.load(f)
+
+# Function to preprocess and predict text
+def predict(texts):
+    # Transform text to TF-IDF features
+    features = tfidf_vectorizer.transform(texts)
+    # Predict classes
+    predictions = model.predict(features)
+    # Convert predictions to class labels
+    predicted_classes = label_encoder.inverse_transform(np.argmax(predictions, axis=1))
+    return predicted_classes
 
 # Streamlit app
-st.title("Image Classification with TFLite Model")
+st.title("Text Classification with Uploaded Excel File")
 
-# Upload image
-uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+# Upload Excel file
+uploaded_file = st.file_uploader("Choose an Excel file...", type=["xlsx"])
+
 if uploaded_file is not None:
-    image = Image.open(uploaded_file)
-    st.image(image, caption="Uploaded Image", use_column_width=True)
-
-    # Load the TFLite model
-    interpreter = load_model('my_model.tflite')
+    # Load the uploaded file
+    df = pd.read_excel(uploaded_file)
     
-    # Preprocess the image
-    preprocessed_image = preprocess_image(image)
-    
-    # Make a prediction
-    prediction = predict(interpreter, preprocessed_image)
-    
-    # Interpret the prediction
-    class_labels = ["Class 0", "Class 1"]  # Update with your actual class labels
-    predicted_class = np.argmax(prediction, axis=1)[0]
-    confidence = np.max(prediction)
-    
-    st.write(f"Predicted Class: {class_labels[predicted_class]}")
-    st.write(f"Confidence: {confidence:.2f}")
-
-# Run the Streamlit app with:
-# streamlit run app.py
+    # Ensure the column containing text is named 'text'
+    if 'text' not in df.columns:
+        st.error("Excel file must contain a column named 'text'")
+    else:
+        # Extract text data
+        texts = df['text'].astype(str)
+        
+        # Display the first few rows
+        st.write("First few rows of the text data:")
+        st.write(texts.head())
+        
+        # Predict classes
+        predictions = predict(texts)
+        
+        # Add predictions to the DataFrame
+        df['predicted_class'] = predictions
+        
+        # Display results
+        st.write("Predictions:")
+        st.write(df)
+        
+        # Option to download the result as a new Excel file
+        result_file = 'predictions.xlsx'
+        df.to_excel(result_file, index=False)
+        st.download_button(label="Download Predictions", data=open(result_file, 'rb').read(), file_name=result_file, mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
