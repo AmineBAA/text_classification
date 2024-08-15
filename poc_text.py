@@ -1,20 +1,20 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
-from sklearn.preprocessing import LabelEncoder
+import pickle
 from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.pipeline import Pipeline
 
-
-# Load the model (adjust the path to your model file)
-classifier, vectorizer = load_model('text_classifier.h5')
+# Load the classifier and vectorizer from .pkl files
+with open('text_classifier.pkl', 'rb') as f:
+    classifier, vectorizer  = pickle.load(f)
 
 
 # Function to preprocess and predict text
 def predict(texts):
-    # Transform text to TF-IDF features
-    features = vectorizer.transform(texts)
-    # Predict classes
-    predictions = model.predict(features)
+    # Transform text to TF-IDF features using the vectorizer
+    features = tfidf_vectorizer.transform(texts)
+    # Predict classes using the classifier
+    predictions = classifier.predict(features)
     return predictions
 
 # Streamlit app
