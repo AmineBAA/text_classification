@@ -48,9 +48,13 @@ if uploaded_file is not None:
         
         # Predict classes
         predictions = predict(X)
+        labels=['Recharge carte prépayée non aboutie','Retard d'exécution d'un ordre virement (normal, cih on line)	Code PIN non reçu','Non réception OTP (Activation, transfert ou recharge)',
+        'Autre']
+        
+        predicted_label=labels[prediction] 
         
         # Add predictions to the DataFrame
-        df['predicted_class'] = predictions
+        df['predicted_class'] = predicted_label
         
         # Display results
         st.write("Predictions:")
