@@ -41,7 +41,7 @@ if uploaded_file is not None:
         st.error("Excel file must contain a column named 'text'")
     else:
         # Extract text data
-        text = df['text'].astype(str)
+        X = df['text'].astype(str)
         X = [str(text) for text in X]
         X=[text.replace("cart ","carte") for text in X]
         X=[preprocess_text(text) for text in X]
