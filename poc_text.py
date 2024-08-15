@@ -47,7 +47,7 @@ if uploaded_file is not None:
         X=[preprocess_text(text) for text in X]
         # Display the first few rows
         st.write("First few rows of the text data:")
-        st.write(texts.head())
+        st.write(X.head())
         
         # Predict classes
         predictions = predict(X)
