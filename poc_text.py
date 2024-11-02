@@ -25,8 +25,8 @@ def predict(text):
 
 # Class label mapping
 labels = {
-    0: "Hello",
-    1: "Code 35",
+    0: "Recharge carte prépayée non aboutie",
+    1: "Retard d'exécution de virement",
     2: "Code PIN non reçu",
     3: "Retrait non servi",
     4: "Non réception OTP",
