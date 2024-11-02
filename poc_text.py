@@ -3,7 +3,7 @@ import pickle
 import re
 
 # Load the trained classifier and vectorizer from .pkl files
-with open('text_classifier.pkl', 'rb') as f:
+with open('text_classifier_chatbot.pkl', 'rb') as f:
     classifier, vectorizer = pickle.load(f)
 
 # Function to preprocess and predict the class of text
@@ -25,8 +25,8 @@ def predict(text):
 
 # Class label mapping
 labels = {
-    0: "Recharge carte prépayée non aboutie",
-    1: "Retard d'exécution de virement",
+    0: "Hello",
+    1: "Code 35",
     2: "Code PIN non reçu",
     3: "Retrait non servi",
     4: "Non réception OTP",
