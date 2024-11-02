@@ -33,6 +33,10 @@ labels = {
     5: "Autre"
 }
 
+# Initialize conversation history in session state
+if 'history' not in st.session_state:
+    st.session_state.history = []
+
 # Streamlit app setup
 st.title("Text Classification Chatbot")
 st.write("Enter a message and get a predicted class for your query.")
@@ -44,4 +48,15 @@ user_input = st.text_input("You: ", "")
 if user_input:
     predicted_class = predict(user_input)
     response = labels[predicted_class]
-    st.write(f"Bot: {response}")
+    
+    # Add user input and bot response to the history
+    st.session_state.history.append(f"You: {user_input}")
+    st.session_state.history.append(f"Bot: {response}")
+
+    # Clear the input field after submission
+    st.text_input("You: ", "", key="user_input")
+
+# Display conversation history
+st.write("### Conversation History")
+for message in st.session_state.history:
+    st.write(message)
