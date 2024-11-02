@@ -41,23 +41,22 @@ if 'history' not in st.session_state:
 st.title("Text Classification Chatbot")
 st.write("Enter a message and get a predicted class for your query.")
 
-# User text input with a unique key
-user_input = st.text_input("You:", key="user_input")
+# User text input
+user_input = st.text_input("You: ", "")
 
 # Predict and display the response if input is provided
 if user_input:
-    # Generate a prediction and response
     predicted_class = predict(user_input)
     response = labels[predicted_class]
-
-    # Add user input and bot response to the conversation history
+    
+    # Add user input and bot response to the history
     st.session_state.history.append(f"You: {user_input}")
     st.session_state.history.append(f"Bot: {response}")
 
     # Clear the input field after submission
-    st.session_state.user_input = ""  # Reset input field value
+    st.text_input("You: ", "", key="user_input")
 
-# Display the conversation history
+# Display conversation history
 st.write("### Conversation History")
 for message in st.session_state.history:
     st.write(message)
